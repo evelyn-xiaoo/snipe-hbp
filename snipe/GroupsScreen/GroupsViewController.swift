@@ -8,27 +8,41 @@
 import UIKit
 
 class GroupsViewController: UIViewController {
+    let items = ["a", "b", "c", "d"]
     let groupsView = GroupsView()
     
     override func loadView() {
-        view = GroupsView()
+        view = groupsView
     }
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        groupsView.collectionView.delegate = self
+        groupsView.collectionView.dataSource = self
+        groupsView.collectionView.reloadData()
+        
+        updateUI()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // To handle conditional rendering of the 'no groups' label and collection view
+    func updateUI() {
+        let hasPictures = !items.isEmpty
+        groupsView.noGroupsLabel.isHidden = hasPictures
+        groupsView.collectionView.isHidden = !hasPictures
     }
-    */
+}
 
+extension GroupsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    // Returns the amount of items to render in this collection
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return items.count
+    }
+    
+    // Renders cells to the UI
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = groupsView.collectionView.dequeueReusableCell(withReuseIdentifier: "groupCell", for: indexPath) as! GroupsCollectionViewCell
+        cell.groupNameLabel.text = items[indexPath.item]
+        cell.backgroundColor = .lightGray
+        return cell
+    }
 }
