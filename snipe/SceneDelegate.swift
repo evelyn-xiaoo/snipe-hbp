@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         /*
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        let mainViewController = LoginViewController() // Initialize your main view controller
+        let mainViewController = CameraScreenController() // Initialize your main view controller
         window?.rootViewController = mainViewController
         window?.makeKeyAndVisible()
          */
