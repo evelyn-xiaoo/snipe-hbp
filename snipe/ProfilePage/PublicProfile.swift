@@ -2,186 +2,222 @@ import UIKit
 
 class PublicProfile: UIView {
     
-    let nameLabel: UILabel
-    let usernameLabel: UILabel
-    let bioLabel: UILabel
-    let publicButton: UIButton  // Button for "PUBLIC"
-    let privateButton: UIButton  // Button for "PRIVATE"
-    let circle: UIView
-    let backArrowButton: UIButton  // Button for arrow.backward
-    let pencilButton: UIButton  // Button for pencil
-    var imageViews: [UIView] = []  // To hold the placeholder views
+    var darkBackground: UIView!
+    var nameLabel: UILabel!
+    var usernameLabel: UILabel!
+    var bioLabel: UILabel!
+    var publicButton: UIButton!
+    var privateButton: UIButton!
+    var circle: UIView!
+    var backArrowButton: UIButton!
+    var pencilButton: UIButton!
+    var collectionView: UICollectionView!
+    
+    var scroll: UIScrollView!
+    var contentView: UIView!
+    
 
     override init(frame: CGRect) {
-        nameLabel = UILabel()
-        usernameLabel = UILabel()
-        bioLabel = UILabel()
-        publicButton = UIButton(type: .system)
-        privateButton = UIButton(type: .system)
-        circle = UIView()
-        backArrowButton = UIButton(type: .system)
-        pencilButton = UIButton(type: .system)
-
         super.init(frame: frame)
-        self.backgroundColor = .white
-
+        self.backgroundColor = UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 1)
+        
         setupViews()
+        setupCollectionView()
+        initConstraints()
     }
 
     required init?(coder: NSCoder) {
-        nameLabel = UILabel()
-        usernameLabel = UILabel()
-        bioLabel = UILabel()
-        publicButton = UIButton(type: .system)
-        privateButton = UIButton(type: .system)
-        circle = UIView()
-        backArrowButton = UIButton(type: .system)
-        pencilButton = UIButton(type: .system)
-
-        super.init(coder: coder)
-
-        setupViews()
+        fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func setupViews() {
-        let darkBackground = UIView()
+        scroll = UIScrollView()
+        scroll.isScrollEnabled = true
+        scroll.alwaysBounceHorizontal = false
+        scroll.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(scroll)
+        
+        contentView = UIView()
+        contentView.backgroundColor = .white
+        contentView.layer.cornerRadius = 15
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        scroll.addSubview(contentView)
+        
+        darkBackground = UIView()
         darkBackground.translatesAutoresizingMaskIntoConstraints = false
         darkBackground.backgroundColor = UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 1)
         darkBackground.layer.cornerRadius = 15
-        addSubview(darkBackground)
+        contentView.addSubview(darkBackground)
 
+        nameLabel = UILabel()
         nameLabel.text = "FIRST LAST"
         nameLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         nameLabel.textColor = .white
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(nameLabel)
+        darkBackground.addSubview(nameLabel)
 
+        usernameLabel = UILabel()
         usernameLabel.text = "@usernamehere"
-        usernameLabel.font = UIFont.systemFont(ofSize: 12)
+        usernameLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         usernameLabel.textColor = .white
         usernameLabel.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(usernameLabel)
+        darkBackground.addSubview(usernameLabel)
 
+        bioLabel = UILabel()
         bioLabel.text = "bio here. idk what to say"
         bioLabel.font = UIFont.systemFont(ofSize: 12)
         bioLabel.textColor = .white
         bioLabel.translatesAutoresizingMaskIntoConstraints = false
         bioLabel.numberOfLines = 0
-        addSubview(bioLabel)
+        darkBackground.addSubview(bioLabel)
 
-        // Button setup for "PUBLIC"
+        circle = UIView()
+        circle.translatesAutoresizingMaskIntoConstraints = false
+        circle.backgroundColor = .gray
+        circle.layer.cornerRadius = 42.5
+        darkBackground.addSubview(circle)
+        
+        // Button setup for arrow.backward SF Symbol (Left Side)
+        backArrowButton = UIButton(type: .system)
+        let arrowImage = UIImage(systemName: "arrow.backward")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+        backArrowButton.setImage(arrowImage, for: .normal)
+        backArrowButton.translatesAutoresizingMaskIntoConstraints = false
+        darkBackground.addSubview(backArrowButton)
+
+        // Button setup for pencil SF Symbol (Right Side)
+        pencilButton = UIButton(type: .system)
+        let pencilImage = UIImage(systemName: "pencil")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+        pencilButton.setImage(pencilImage, for: .normal)
+        pencilButton.translatesAutoresizingMaskIntoConstraints = false
+        darkBackground.addSubview(pencilButton)
+        
+        publicButton = UIButton(type: .system)
         publicButton.setTitle("PUBLIC", for: .normal)
         publicButton.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
         publicButton.setTitleColor(UIColor(red: 146/255, green: 16/255, blue: 16/255, alpha: 1), for: .normal)
         publicButton.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(publicButton)
+        contentView.addSubview(publicButton)
 
-        // Button setup for "PRIVATE"
+        privateButton = UIButton(type: .system)
         privateButton.setTitle("PRIVATE", for: .normal)
         privateButton.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
         privateButton.setTitleColor(.black, for: .normal)
         privateButton.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(privateButton)
-
-        circle.translatesAutoresizingMaskIntoConstraints = false
-        circle.backgroundColor = .gray
-        circle.layer.cornerRadius = 42.5
-        addSubview(circle)
-
-        // Button setup for arrow.backward SF Symbol (Left Side)
-        let arrowImage = UIImage(systemName: "arrow.backward")?.withTintColor(.black, renderingMode: .alwaysOriginal)
-        backArrowButton.setImage(arrowImage, for: .normal)
-        backArrowButton.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(backArrowButton)
-
-        // Button setup for pencil SF Symbol (Right Side)
-        let pencilImage = UIImage(systemName: "pencil")?.withTintColor(.black, renderingMode: .alwaysOriginal)
-        pencilButton.setImage(pencilImage, for: .normal)
-        pencilButton.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(pencilButton)
-
-        // Create placeholder views (4 placeholders for now)
-        let placeholderViews = [UIView(), UIView(), UIView(), UIView()]  // 4 placeholders for images
-        for (index, placeholderView) in placeholderViews.enumerated() {
-            placeholderView.backgroundColor = .gray  // Set background color as placeholder
-            placeholderView.translatesAutoresizingMaskIntoConstraints = false
-            placeholderView.isUserInteractionEnabled = true
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
-            placeholderView.addGestureRecognizer(tapGesture)
-            imageViews.append(placeholderView)
-            addSubview(placeholderView)
-        }
-
-        // Set the constraints for each placeholder
-        NSLayoutConstraint.activate([
-            // Placeholder 1
-            imageViews[0].topAnchor.constraint(equalTo: publicButton.bottomAnchor, constant: 50),
-            imageViews[0].leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 50),
-            imageViews[0].widthAnchor.constraint(equalToConstant: 150),
-            imageViews[0].heightAnchor.constraint(equalToConstant: 150),
-
-            // Placeholder 2
-            imageViews[1].topAnchor.constraint(equalTo: publicButton.bottomAnchor, constant: 50),
-            imageViews[1].leadingAnchor.constraint(equalTo: imageViews[0].trailingAnchor, constant: 20),
-            imageViews[1].widthAnchor.constraint(equalToConstant: 150),
-            imageViews[1].heightAnchor.constraint(equalToConstant: 150),
-
-            // Placeholder 3
-            imageViews[2].topAnchor.constraint(equalTo: imageViews[0].bottomAnchor, constant: 20),
-            imageViews[2].leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 50),
-            imageViews[2].widthAnchor.constraint(equalToConstant: 150),
-            imageViews[2].heightAnchor.constraint(equalToConstant: 150),
-
-            // Placeholder 4
-            imageViews[3].topAnchor.constraint(equalTo: imageViews[1].bottomAnchor, constant: 20),
-            imageViews[3].leadingAnchor.constraint(equalTo: imageViews[2].trailingAnchor, constant: 20),
-            imageViews[3].widthAnchor.constraint(equalToConstant: 150),
-            imageViews[3].heightAnchor.constraint(equalToConstant: 150)
-        ])
+        contentView.addSubview(privateButton)
+    }
+    
+    private func setupCollectionView() {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.itemSize = CGSize(width: 175, height: 210)
+        layout.minimumInteritemSpacing = 5
+        layout.minimumLineSpacing = 20
         
-        // Auto Layout Constraints for other views
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white
+        collectionView.contentInset.left = 12
+        collectionView.contentInset.right = 12
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.isScrollEnabled = false
+        collectionView.register(GroupsCollectionViewCell.self, forCellWithReuseIdentifier: "groupsCell")
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        contentView.addSubview(collectionView)
+    }
+    
+    private func initConstraints() {
+        
         NSLayoutConstraint.activate([
-            darkBackground.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
-            darkBackground.bottomAnchor.constraint(equalTo: self.topAnchor, constant: 260), // Moved up 20
-            darkBackground.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            darkBackground.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            scroll.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+            scroll.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
+            scroll.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
+            scroll.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            
+            contentView.topAnchor.constraint(equalTo: scroll.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scroll.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scroll.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scroll.bottomAnchor, constant: 30),
+            contentView.widthAnchor.constraint(equalTo: scroll.widthAnchor),
+            contentView.heightAnchor.constraint(greaterThanOrEqualTo: scroll.heightAnchor, multiplier: 3),
+            
+            darkBackground.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            darkBackground.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            darkBackground.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            darkBackground.heightAnchor.constraint(equalToConstant: 150),
+            darkBackground.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            
+            nameLabel.leadingAnchor.constraint(equalTo: circle.trailingAnchor, constant: 20),
+            nameLabel.topAnchor.constraint(equalTo: circle.topAnchor),
+            
+            usernameLabel.leadingAnchor.constraint(equalTo: backArrowButton.trailingAnchor, constant: 10),
+            usernameLabel.topAnchor.constraint(equalTo: backArrowButton.topAnchor),
 
+            bioLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+            bioLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5),
+
+            
             circle.widthAnchor.constraint(equalToConstant: 85),
-            circle.heightAnchor.constraint(equalToConstant: 85),
-            circle.topAnchor.constraint(equalTo: self.topAnchor, constant: 115), // Moved up 20
-            circle.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 40),
-
-            nameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 140),
-            nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 130), // Moved up 20
-
-            usernameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 140),
-            usernameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 20),
-
-            bioLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 40),
-            bioLabel.topAnchor.constraint(equalTo: usernameLabel.bottomAnchor, constant: 30),
-            bioLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            circle.heightAnchor.constraint(equalTo: circle.widthAnchor),
+            circle.topAnchor.constraint(equalTo: usernameLabel.bottomAnchor, constant: 20), // Moved up 20
+            circle.leadingAnchor.constraint(equalTo: backArrowButton.leadingAnchor, constant: 10),
             
             // Arrow Backward Button Constraints (Moved up 20)
-            backArrowButton.bottomAnchor.constraint(equalTo: nameLabel.topAnchor, constant: -40),  // 50 points above nameLabel
-            backArrowButton.trailingAnchor.constraint(equalTo: nameLabel.leadingAnchor, constant: -65), // Moved left
+            backArrowButton.topAnchor.constraint(equalTo: darkBackground.safeAreaLayoutGuide.topAnchor, constant: 5),  // 50 points above nameLabel
+            backArrowButton.leadingAnchor.constraint(equalTo: darkBackground.leadingAnchor, constant: 10), // Moved left
 
             // Pencil Button Constraints (Moved up 20)
-            pencilButton.bottomAnchor.constraint(equalTo: nameLabel.topAnchor, constant: -40),  // 50 points above nameLabel
-            pencilButton.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 80), // Moved right
+            pencilButton.topAnchor.constraint(equalTo: darkBackground.safeAreaLayoutGuide.topAnchor, constant: 5),  // 50 points above nameLabel
+            pencilButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10), // Moved right
 
-            // Public Button Constraints
-            publicButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 80),
-            publicButton.topAnchor.constraint(equalTo: bioLabel.bottomAnchor, constant: 50),
-
-            // Private Button Constraints
-            privateButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -80),
-            privateButton.topAnchor.constraint(equalTo: bioLabel.bottomAnchor, constant: 50)
+            
+            publicButton.trailingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: -10),
+            publicButton.topAnchor.constraint(equalTo: darkBackground.bottomAnchor, constant: 20),
+            
+            privateButton.leadingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 10),
+            privateButton.topAnchor.constraint(equalTo: publicButton.topAnchor),
+            
+            collectionView.topAnchor.constraint(equalTo: publicButton.bottomAnchor, constant: 20),
+            collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
+            collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
+            collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
+}
 
-    @objc func imageTapped(sender: UITapGestureRecognizer) {
-        // This is where the action for the image click goes
-        print("Placeholder tapped!")
-        // Implement navigation or any other action
+extension PublicProfile: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 8
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "groupsCell", for: indexPath) as! GroupsCollectionViewCell
+     //   cell.label.text = "\(indexPath.item)"
+        return cell
     }
 }
+
+class GroupsCollectionViewCell: UICollectionViewCell {
+    let label: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        contentView.addSubview(label)
+        NSLayoutConstraint.activate([
+            label.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 130)
+        ])
+        contentView.backgroundColor = .lightGray
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
