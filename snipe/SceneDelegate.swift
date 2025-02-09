@@ -31,7 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         } else {
             print("Going to login screen")
             // User is not logged in, show the login screen
-            let loginViewController = LoginViewController()
+            let loginViewController = GroupsViewController()
             window?.rootViewController = loginViewController
         }
 
