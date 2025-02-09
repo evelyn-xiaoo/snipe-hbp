@@ -8,6 +8,7 @@
 import UIKit
 
 class ContinueSignupView: UIView {
+    var profileImage: UIButton!
     var name: UITextField!
     var username: UITextField!
     var bio: UITextField!
@@ -17,9 +18,25 @@ class ContinueSignupView: UIView {
         super.init(frame: frame)
         self.backgroundColor = .red
         
+        setupimagePFP()
         setUpTextFields()
         setUpButtons()
         initConstraints()
+    }
+    
+    func setupimagePFP(){
+        profileImage = UIButton(type: .system)
+        profileImage.setTitle("", for: .normal)
+        profileImage.setImage(UIImage(systemName: "person.circle"), for: .normal)
+        profileImage.tintColor = .gray
+        profileImage.contentHorizontalAlignment = .fill
+        profileImage.contentVerticalAlignment = .fill
+        profileImage.imageView?.contentMode = .scaleAspectFill
+        profileImage.translatesAutoresizingMaskIntoConstraints = false
+        profileImage.showsMenuAsPrimaryAction = true
+        profileImage.layer.cornerRadius = 50
+        profileImage.clipsToBounds = true
+        self.addSubview(profileImage)
     }
     
     func setUpTextFields() {
@@ -52,8 +69,12 @@ class ContinueSignupView: UIView {
     
     func initConstraints() {
         NSLayoutConstraint.activate([
-            // TextField constraints
-            name.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 100),
+            profileImage.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 0),
+            profileImage.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
+            profileImage.widthAnchor.constraint(equalToConstant: 125),
+            profileImage.heightAnchor.constraint(equalTo: profileImage.widthAnchor),
+            
+            name.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 100),
             name.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
             name.widthAnchor.constraint(equalToConstant: 200),
             name.heightAnchor.constraint(equalToConstant: 40),
