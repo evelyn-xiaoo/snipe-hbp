@@ -15,11 +15,11 @@ extension ContinueSignupController {
            let bio = continueSignUpView.bio.text {
             let userId = Auth.auth().currentUser!.uid
             let newUser = FirestoreUser(id: userId, name: name, bio: bio, username: username)
-            self.connectToFirestorm(newUser: newUser)
+            self.connectToFirestore(newUser: newUser)
         }
     }
     
-    func connectToFirestorm(newUser: FirestoreUser) {
+    func connectToFirestore(newUser: FirestoreUser) {
         // Reference to Firestore
         let db = Firestore.firestore()
         print(newUser.id)
@@ -37,10 +37,11 @@ extension ContinueSignupController {
                 // Handle error (maybe show alert)
             } else {
                 print("User data uploaded successfully!")
-                let cameraViewController = ViewController()
-                cameraViewController.modalPresentationStyle = .fullScreen
-                self.present(cameraViewController, animated: true)
-                // Perform any additional actions, like transitioning to the next screen
+                self.dismiss(animated: true)
+                let mainVC = ViewController()
+                let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
+                    sceneDelegate?.window?.rootViewController = mainVC
+                
             }
         }
     }

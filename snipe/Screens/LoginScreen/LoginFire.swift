@@ -17,6 +17,16 @@ extension LoginViewController {
                 if error == nil{
                     //MARK: the user login is successful...
                     if let currentUser = Auth.auth().currentUser {
+                        // check if the user has not finished setting up account
+                            // userid is not in users collection
+                            // MARK: complete
+                            // if true then
+                        /*
+                         let contVC = ContinueSignupController()
+                         let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
+                             sceneDelegate?.window?.rootViewController = contVC
+                         */
+                        //else
                         let mainVC = ViewController()
                         let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
                             sceneDelegate?.window?.rootViewController = mainVC

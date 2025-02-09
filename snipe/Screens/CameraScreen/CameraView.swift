@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class CameraView: UIView {
     var logOutButton: UIButton!
@@ -14,16 +15,20 @@ class CameraView: UIView {
     var groupButton: UIButton!
     var personCircleButton: UIButton!
     var cameraBox: UIView!  // Declare cameraBox as an instance variable
-    var circle: UIView!     // Declare circle as an instance variable
+    var circle: UIButton!     // Declare circle as an instance variable
+    var previewView: UIView!
+    
+    var captureSession: AVCaptureSession?
+    var previewLayer: AVCaptureVideoPreviewLayer?
+    var camera: UIView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
         
-        setupViews()  // Set up label and image views
-
+        setupViews()
         
-   //     setUpButtons()
+        setUpButtons()
         
         initConstraints()
     }
@@ -32,9 +37,19 @@ class CameraView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+
+    
     // Function to setup the label, buttons, and views
     private func setupViews() {
         let customRedColor = UIColor.red
+        
+        // Camera box setup
+        cameraBox = UIView()
+        cameraBox.translatesAutoresizingMaskIntoConstraints = false
+        cameraBox.backgroundColor = .gray
+        cameraBox.layer.cornerRadius = 15
+        self.addSubview(cameraBox)
+        
         
         // Setup label
         snipeHeader = UILabel()
@@ -60,34 +75,32 @@ class CameraView: UIView {
         personCircleButton.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(personCircleButton)
         
-        // Camera box setup
-        cameraBox = UIView()
-        cameraBox.translatesAutoresizingMaskIntoConstraints = false
-        cameraBox.backgroundColor = .gray
-        cameraBox.layer.cornerRadius = 15
-        self.addSubview(cameraBox)
         
         // Large circle setup
-        circle = UIView()
+        circle = UIButton()
         circle.translatesAutoresizingMaskIntoConstraints = false
         circle.backgroundColor = .white
         circle.layer.cornerRadius = 42.5
         circle.layer.borderWidth = 1
         circle.layer.borderColor = customRedColor.cgColor
         self.addSubview(circle)
+        
+        
+
     }
     
- /*  func setUpButtons() {
+   func setUpButtons() {
         logOutButton = UIButton(type: .system)
         logOutButton.setTitle("Log Out", for: .normal)
         logOutButton.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(logOutButton)
-    }*/
+    }
     
     func initConstraints() {
         NSLayoutConstraint.activate([
-            //logOutButton.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
-            //logOutButton.centerYAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerYAnchor),
+            
+            logOutButton.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
+            logOutButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             
             // Label Constraints
             snipeHeader.centerXAnchor.constraint(equalTo: self.centerXAnchor),
