@@ -48,7 +48,13 @@ class LoginView: UIView {
     
     func setUpLabels() {
         titleLabel = UILabel()
-        titleLabel.text = "get ready to"
+        let text = "get ready to"
+        let attributes: [NSAttributedString.Key: Any] = [
+            .kern: 12.5, // Adjust letter spacing (increase or decrease as needed)
+            .font: UIFont(name: "Londrina Shadow", size: 36)! // Ensure the font is loaded
+        ]
+
+        titleLabel.attributedText = NSAttributedString(string: text, attributes: attributes)
         titleLabel.textColor = .black
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(titleLabel)
@@ -56,6 +62,7 @@ class LoginView: UIView {
         snipeLabel = UILabel()
         snipeLabel.text = "SNIPE"
         snipeLabel.textColor = .red
+        snipeLabel.font = UIFont(name:"Inter", size:100)
         snipeLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(snipeLabel)
     }
@@ -63,11 +70,17 @@ class LoginView: UIView {
     func setUpFields() {
         emailTextField = UITextField()
         emailTextField.placeholder = "Email"
+        emailTextField.borderStyle = .roundedRect
+        emailTextField.layer.borderWidth = 1
+        emailTextField.layer.borderColor = UIColor.black.cgColor
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(emailTextField)
         
         passwordTextField = UITextField()
         passwordTextField.placeholder = "Password"
+        passwordTextField.borderStyle = .roundedRect
+        passwordTextField.layer.borderWidth = 1
+        passwordTextField.layer.borderColor = UIColor.black.cgColor
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(passwordTextField)
     }
@@ -76,10 +89,10 @@ class LoginView: UIView {
         NSLayoutConstraint.activate([
             
             titleLabel.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
-            titleLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 50),
+            titleLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 100),
             
             snipeLabel.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
-            snipeLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+            snipeLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 0),
             
             emailTextField.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
             emailTextField.topAnchor.constraint(equalTo: snipeLabel.bottomAnchor, constant: 20),

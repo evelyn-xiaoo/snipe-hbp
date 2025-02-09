@@ -36,7 +36,7 @@ class SignupViewController: UIViewController {
         else if signupView.verifyPassword.text?.isEmpty ?? true {
             print("")
         }
-        if (signupView.password.text != signupView.verifyPassword.text){
+        else if (signupView.password.text != signupView.verifyPassword.text){
                 print("passwords do not match")
         }
         else {
