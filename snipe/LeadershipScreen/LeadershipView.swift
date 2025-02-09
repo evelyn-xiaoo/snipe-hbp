@@ -8,13 +8,15 @@
 import UIKit
 
 class LeadershipView: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
+    var backButton: UIButton!
+    var groupNameLabel: UILabel!
+    var editButton: UIButton!
+    
+    var targetLabel: UILabel!
+    var votingDayLabel: UIStackView!
+    
+    var yourSubmissionsLabel: UIStackView!
+    var placeholders: [UIImageView] = []
+    var leaderboardLabel: UILabel!
 
 }

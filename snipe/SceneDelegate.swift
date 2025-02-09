@@ -26,12 +26,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
          */
         if Auth.auth().currentUser != nil {
             // User is logged in, navigate to the main screen
-            let mainViewController = ViewController() // Change this to your main screen later
+            let mainViewController = CameraScreenController() // Change this to your main screen later
             window?.rootViewController = mainViewController
         } else {
             print("Going to login screen")
             // User is not logged in, show the login screen
-            let loginViewController = GroupsViewController()
+            let loginViewController = LoginViewController()
             window?.rootViewController = loginViewController
         }
 

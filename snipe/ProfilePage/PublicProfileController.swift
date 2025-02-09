@@ -17,5 +17,14 @@ class PublicProfileController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Additional setup after loading the view, if needed.
+        
+        publicProfile.backArrowButton.addTarget(self, action: #selector(backArrowTapped), for: .touchUpInside)
+    }
+    
+    @objc func backArrowTapped() {
+        print("back arrow tapped")
+        let cameraScreenViewController = CameraScreenController()
+        cameraScreenViewController.modalPresentationStyle = .fullScreen
+        self.present(cameraScreenViewController, animated: true)
     }
 }

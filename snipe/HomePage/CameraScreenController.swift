@@ -16,6 +16,22 @@ class CameraScreenController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Additional setup after loading the view, if needed.
+        
+        cameraScreen.groupButton.addTarget(self, action: #selector(groupButtonTapped), for: .touchUpInside)
+        cameraScreen.personCircleButton.addTarget(self, action: #selector(personCircleTapped), for: .touchUpInside)
+    }
+    
+    @objc func groupButtonTapped() {
+        print("group button pressed")
+        let groupViewController = GroupsViewController()
+        groupViewController.modalPresentationStyle = .fullScreen
+        self.present(groupViewController, animated: true)
+    }
+    
+    @objc func personCircleTapped() {
+        print("person circle pressed")
+        let profileViewController = PublicProfileController()
+        profileViewController.modalPresentationStyle = .fullScreen
+        self.present(profileViewController, animated: true)
     }
 }
