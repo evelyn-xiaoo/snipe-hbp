@@ -9,6 +9,7 @@ import UIKit
 import FirebaseAuth
 import AVFoundation
 
+
 class ViewController: UIViewController {
 
     let cameraView = CameraView()
@@ -134,9 +135,16 @@ extension ViewController: AVCapturePhotoCaptureDelegate {
     }
     
     func showCapturedImage(_ image: UIImage) {
+        let selectPerson = PersonViewController()
+        selectPerson.picture = image
+        selectPerson.modalPresentationStyle = .fullScreen
+        self.present(selectPerson, animated: true)
+        
+        /*
         let imageView = UIImageView(image: image)
         imageView.frame = cameraView.cameraBox.bounds
         imageView.contentMode = .scaleAspectFill
+        
         imageView.backgroundColor = .black
         imageView.isUserInteractionEnabled = true
         
@@ -144,7 +152,9 @@ extension ViewController: AVCapturePhotoCaptureDelegate {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissPreview(_:)))
         imageView.addGestureRecognizer(tapGesture)
         
+        
         cameraView.cameraBox.addSubview(imageView)
+        */
     }
 
     @objc func dismissPreview(_ sender: UITapGestureRecognizer) {

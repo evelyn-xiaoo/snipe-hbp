@@ -46,7 +46,7 @@ class CameraView: UIView {
         // Camera box setup
         cameraBox = UIView()
         cameraBox.translatesAutoresizingMaskIntoConstraints = false
-        cameraBox.backgroundColor = .gray
+        //cameraBox.backgroundColor = .gray
         cameraBox.layer.cornerRadius = 15
         self.addSubview(cameraBox)
         
