@@ -27,7 +27,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        cameraView.logOutButton.addTarget(self, action: #selector(onLogoutIconClick), for: .touchUpInside)
+        //cameraView.logOutButton.addTarget(self, action: #selector(onLogoutIconClick), for: .touchUpInside)
         
     }
     
