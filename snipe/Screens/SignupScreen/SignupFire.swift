@@ -14,6 +14,10 @@ extension SignupViewController {
             Auth.auth().createUser(withEmail: email, password: password, completion: {result, error in
                 if error == nil{
                     print("add user to firebase")
+                    print("signup tapped")
+                    let continueSignUpViewController = ContinueSignupController()
+                    continueSignUpViewController.modalPresentationStyle = .fullScreen
+                    self.present(continueSignUpViewController, animated: true)
                 } else{
                     //MARK: there is a error creating the user...
                     print(error)
