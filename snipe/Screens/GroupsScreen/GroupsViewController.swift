@@ -13,16 +13,21 @@ class GroupsViewController: UIViewController {
     override func loadView() {
         view = groupsView
     }
-
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         groupsView.backButton.addTarget(self, action: #selector(backArrowTapped), for: .touchUpInside)
+        groupsView.addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
     }
     
     @objc func backArrowTapped() {
         print("back arrow tapped")
-        let cameraScreenViewController = CameraScreenController()
-        cameraScreenViewController.modalPresentationStyle = .fullScreen
-        self.present(cameraScreenViewController, animated: true)
+        self.dismiss(animated: true)
+    }
+    
+    @objc func addButtonTapped() {
+        let createGroupViewController = CreateGroupController()
+        createGroupViewController.modalPresentationStyle = .fullScreen
+        self.present(createGroupViewController, animated: true)
     }
 }

@@ -17,5 +17,10 @@ class CreateGroupController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Additional setup after loading the view, if needed.
+        createGroup.groupBackArrow.addTarget(self, action: #selector(backArrowTapped), for: .touchUpInside)
+    }
+    
+    @objc func backArrowTapped() {
+        self.dismiss(animated: true)
     }
 }
