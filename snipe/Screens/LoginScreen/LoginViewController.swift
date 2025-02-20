@@ -23,6 +23,12 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view.
         loginView.createAccountButton.addTarget(self, action: #selector(createAccountTapped), for: .touchUpInside)
         loginView.loginButton.addTarget(self, action: #selector(loginTapped), for: .touchUpInside)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     @objc func createAccountTapped() {

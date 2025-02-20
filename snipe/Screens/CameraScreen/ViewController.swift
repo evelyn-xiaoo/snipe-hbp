@@ -48,7 +48,24 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         cameraView.circle.addTarget(self, action: #selector(onCameraButtonClick), for: .touchUpInside)
         cameraView.logOutButton.addTarget(self, action: #selector(onLogoutIconClick), for: .touchUpInside)
-        
+        cameraView.groupButton.addTarget(self, action: #selector(groupButtonTapped), for: .touchUpInside)
+        cameraView.personCircleButton.addTarget(self, action: #selector(personCircleTapped), for: .touchUpInside)
+    }
+    
+    
+    @objc func groupButtonTapped() {
+        print("group button pressed")
+        let groupViewController = GroupsViewController()
+        groupViewController.modalPresentationStyle = .fullScreen
+        self.present(groupViewController, animated: true)
+    }
+     
+    
+    @objc func personCircleTapped() {
+        print("person circle pressed")
+        let profileViewController = PublicProfileController()
+        profileViewController.modalPresentationStyle = .fullScreen
+        self.present(profileViewController, animated: true)
     }
     
     func setupCamera() {
@@ -115,6 +132,9 @@ class ViewController: UIViewController {
 
     //
     @objc func onCameraButtonClick() {
+        if !captureSession.isRunning {
+            print("help")
+        }
         let settings = AVCapturePhotoSettings()
             settings.flashMode = .auto
             imageOutput?.capturePhoto(with: settings, delegate: self)

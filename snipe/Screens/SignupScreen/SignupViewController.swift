@@ -20,6 +20,12 @@ class SignupViewController: UIViewController {
         // Do any additional setup after loading the view.
         signupView.signupButton.addTarget(self, action: #selector(signupTapped), for: .touchUpInside)
         signupView.loginButton.addTarget(self, action: #selector(loginTapped), for: .touchUpInside)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     @objc func signupTapped() {
